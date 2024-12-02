@@ -59,6 +59,7 @@ dependencies:
   get: any
   shared_preferences: ^2.3.3
   jwt_decoder: ^2.0.1
+  dart_jsonwebtoken: ^2.14.2
 
   #flutter_localizations: any
 dev_dependencies:

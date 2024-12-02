@@ -1,9 +1,10 @@
-import 'package:catarsis/modules/auth/pages/register_page.dart';
 import 'package:flutter/material.dart';
-import 'package:catarsis/utils/services/auth_service/auth_service.dart';
-import 'package:catarsis/modules/home/home_page.dart';
+import '../controllers/auth_controller.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -11,19 +12,21 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
+  final AuthController _authController = AuthController();
   String? _errorMessage;
 
   void _login() async {
-    String email = _emailController.text;
-    String password = _passwordController.text;
-    String? token = await _authService.login(email, password);
+    String? token = await _authController.login(
+      _emailController.text,
+      _passwordController.text,
+    );
 
     if (token != null) {
-      await _authService.saveToken(token);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+      setState(() {
+        _errorMessage = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login successful!')),
       );
     } else {
       setState(() {
@@ -35,7 +38,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(
+        title: const Text('Login'),
+        automaticallyImplyLeading: false, // Oculta la flecha de retroceso
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
