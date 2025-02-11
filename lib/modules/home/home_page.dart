@@ -30,20 +30,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (_userId != null) Text('User ID: $_userId'),
-            if (_userName != null) Text('User Name: $_userName'),
-            if (_role != null) Text('Role: $_role'),
-          ],
-        ),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('Home'),
+      automaticallyImplyLeading: false, // Esto quita el botón de retroceso
+    ),
+    body: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          if (_userId != null) Text('User ID: $_userId'),
+          if (_userName != null) Text('User Name: $_userName'),
+          if (_role != null) Text('Role: $_role'),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
